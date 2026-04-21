@@ -1,4 +1,5 @@
 {
+	"$schema": "https://unpkg.com/wrangler/config-schema.json",
 	"compatibility_date": "2026-04-21",
 	"compatibility_flags": ["global_fetch_strictly_public"],
 	"name": "mariaangelika-portfolio",
@@ -9,5 +10,13 @@
 	},
 	"observability": {
 		"enabled": true
+	},
+	"vars": {
+		"ENVIRONMENT": "production",
+		"TURNSTILE_SITE_KEY": "",
+		"CONTACT_DESTINATION": "hi@mariaangelika.com"
 	}
+	// Secrets (NOT here — set via `npx wrangler secret put <NAME>`):
+	//   TURNSTILE_SECRET_KEY
+	//   RESEND_API_KEY
 }
