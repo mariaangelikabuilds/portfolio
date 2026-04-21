@@ -15,8 +15,12 @@ yarn-error.log*
 pnpm-debug.log*
 
 
+# wrangler dev secrets
+.dev.vars
+
 # environment variables
 .env
+.env.local
 .env.production
 
 # macOS-specific files
