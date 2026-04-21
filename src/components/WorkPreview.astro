@@ -1,0 +1,78 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+}
+
+const { entry } = Astro.props;
+const { title, tagline, stack, year, slug } = entry.data;
+---
+<a href={`/work/${slug}`} class="work-card" data-rules>
+  <div class="work-thumb" aria-hidden="true"></div>
+  <div class="work-body">
+    <h3 class="work-title" transition:name={`work-title-${slug}`}>{title}</h3>
+    <p class="work-tagline">{tagline}</p>
+    <p class="work-stack">{stack.slice(0, 4).join(' · ')}</p>
+  </div>
+  <div class="work-year">{year}</div>
+</a>
+
+<style>
+  .work-card {
+    display: grid;
+    grid-template-columns: 80px 1fr 90px;
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1px solid var(--color-cream-faint);
+    align-items: start;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .work-card:last-child {
+    border-bottom: 1px solid var(--color-cream-faint);
+  }
+
+  .work-thumb {
+    width: 80px;
+    height: 56px;
+    background: linear-gradient(135deg, rgba(245, 230, 200, 0.1), transparent);
+    border-radius: 2px;
+    border: 1px solid var(--color-cream-faint);
+  }
+
+  .work-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .work-tagline {
+    font-size: 13px;
+    color: var(--color-cream-dim);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .work-stack {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-cream-dim);
+    letter-spacing: 0.04em;
+  }
+
+  .work-year {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-cream-dim);
+    text-align: right;
+  }
+
+  .work-card:hover .work-title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+</style>
