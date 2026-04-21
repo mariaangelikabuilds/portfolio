@@ -5,10 +5,13 @@ import MobileHeader from '../components/MobileHeader.astro';
 import WorkPreview from '../components/WorkPreview.astro';
 import FooterEcho from '../components/FooterEcho.astro';
 import Hero from '../components/Hero.tsx';
+import ContactForm from '../components/ContactForm.tsx';
 import { getCollection } from 'astro:content';
 
 const entries = await getCollection('work');
 entries.sort((a, b) => a.data.order - b.data.order);
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 
 const heroLine1 = [['Design', ' ', 'Engineer.']];
 const heroLine2 = [
@@ -40,7 +43,7 @@ const heroLine2 = [
       <p class="contact-intro">
         Want to work together? Fill the form below. The message goes to my inbox directly. Turnstile keeps the bots out.
       </p>
-      <div id="contact-form-mount"></div>
+      <ContactForm client:visible siteKey={turnstileSiteKey} />
     </section>
 
     <FooterEcho />

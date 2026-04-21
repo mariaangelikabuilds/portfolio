@@ -31,6 +31,7 @@ const adobeFontsCSS = import.meta.env.PUBLIC_ADOBE_FONTS_URL ?? "";
     <meta property="og:url" content="https://mariaangelika.com" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     {adobeFontsCSS && <link rel="stylesheet" href={adobeFontsCSS} />}
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
     <ClientRouter />
     <title>{title}</title>
   </head>
