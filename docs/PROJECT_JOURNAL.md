@@ -6,6 +6,44 @@ Newest entries at the top.
 
 ---
 
+## 2026-04-21. Session 1b: Phase 1 implementation (scaffold and repo)
+
+Same-day continuation. Executed Phase 1 of the implementation plan via subagent-driven development. Five tasks done, four commits, repo live.
+
+### Completed
+- **Task 1:** Astro 6.1.8 minimal template scaffolded with TypeScript strict. Preserved existing CLAUDE.md + docs/. Commit: `f3ace2f chore: scaffold Astro minimal template`.
+- **Task 2:** Integrations installed: `@astrojs/cloudflare` 13.1.10, `@astrojs/react` 5.0.3, `@tailwindcss/vite` 4.2.4 + `tailwindcss` 4.0.0, `gsap` 3.15.0, `zod` 4.3.6. `astro.config.mjs` configured with all three integrations plus Tailwind Vite plugin. Commit: `bf8de26 chore: add cloudflare, react, tailwind v4 integrations`.
+- **Task 3:** `wrangler.jsonc` configured with ENVIRONMENT, TURNSTILE_SITE_KEY (empty placeholder), CONTACT_DESTINATION vars. `package.json` scripts gained `preview` (astro build + wrangler dev) and `deploy` (astro build + wrangler deploy). Commit: `e917687 chore: configure wrangler vars and add preview/deploy scripts`.
+- **Task 4:** `.gitignore` expanded with `.dev.vars`, `.env.local`, `.env.production`. `public/.assetsignore` created with `_worker.js` and `_routes.json`. Commit: `528e191 chore: configure gitignore and cloudflare assets ignore`.
+- **Task 5:** GitHub repo created at https://github.com/mariaangelikabuilds/portfolio (public). All four commits pushed to origin/main.
+
+### Plan deviations noted
+- Plan referenced Astro 5; actual is Astro 6.1.8 (current stable April 2026). No functional impact — all referenced APIs work identically.
+- Plan expected `nodejs_compat` compatibility flag. Cloudflare adapter defaulted to `global_fetch_strictly_public` instead (newer, stricter flag). Preserved adapter's choice.
+- Plan expected `dist/_worker.js/index.js` as Worker entry. Astro 6 adapter uses package-resolved path `@astrojs/cloudflare/entrypoints/server` with `dist/client/` + `dist/server/` output structure. Preserved adapter's layout.
+- Plan listed `astro preview` as default preview script. Upgraded to `astro build && wrangler dev` so local preview uses real workerd runtime (matches production).
+
+### Flagged for later
+- Cloudflare adapter flagged implicit `IMAGES` and `SESSION` bindings it expects at runtime. Not used by v1 (no Cloudflare Images, no KV sessions). If build warnings surface during deploy, add `disableImagesService: true` to adapter config.
+- Node engine requirement in `package.json` is `>=22.12.0` (Astro 6 default). Fine for current machine and Cloudflare's build runners.
+
+### Next session (Phase 2 onward)
+Human gate before Phase 2: Angel must activate fonts in Adobe Fonts before design tokens and base layout can be built.
+
+**Angel's prep for session 2:**
+1. Go to fonts.adobe.com → Web Projects → create or edit project for `mariaangelika.com`
+2. Activate: Freight Big Pro (all available weights, prefer variable if listed), Neue Haas Grotesk Display, Neue Haas Grotesk Text, Input Mono
+3. Copy the `use.typekit.net/[project-id].css` URL from the embed code
+4. Open a terminal in `D:\2026 Workspace\portfolio` and create `.env` with:
+   ```
+   PUBLIC_ADOBE_FONTS_URL=https://use.typekit.net/[project-id].css
+   ```
+5. Paste the spec + plan + journal references into a fresh Claude Code session and say "Phase 2 ready." Claude picks up from Task 6.
+
+Current repo state: scaffolded project on GitHub, build passes, no site content yet.
+
+---
+
 ## 2026-04-21. Session 1: brainstorm to design spec
 
 ### Context at session start
