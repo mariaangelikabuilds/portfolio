@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* Design tokens for mariaangelika.com v1 */
+
+:root {
+  /* Palette */
+  --color-navy: #0a192f;
+  --color-cream: #f5e6c8;
+  --color-cream-dim: rgba(245, 230, 200, 0.6);
+  --color-cream-faint: rgba(245, 230, 200, 0.15);
+
+  /* Fonts (Adobe Fonts family names, verified at fonts.adobe.com) */
+  --font-display: "freight-big-pro", Georgia, serif;
+  --font-body: "neue-haas-grotesk-display", "neue-haas-grotesk-text", "Helvetica Neue", sans-serif;
+  --font-mono: "input-mono", ui-monospace, monospace;
+
+  /* Layout */
+  --panel-width: 38%;
+  --prose-max: 640px;
+
+  /* Motion */
+  --wght-base: 500;
+  --wght-max: 800;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--color-navy);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.font-display { font-family: var(--font-display); }
+.font-body { font-family: var(--font-body); }
+.font-mono { font-family: var(--font-mono); }

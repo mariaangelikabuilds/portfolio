@@ -1,17 +1,16 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Maria Angelika Agutaya — Design Engineer">
+  <main style="padding: 48px;">
+    <h1 class="font-display" style="font-size: 48px; line-height: 1.1; letter-spacing: -0.03em;">
+      Design Engineer.
+    </h1>
+    <p class="font-display" style="font-size: 32px; line-height: 1.1; margin-top: 12px; color: var(--color-cream);">
+      The site you're reading is the portfolio.
+    </p>
+    <p class="font-mono" style="font-size: 12px; color: var(--color-cream-dim); letter-spacing: 0.08em; margin-top: 48px; text-transform: uppercase;">
+      Placeholder — Task 6 scaffold. Full landing page in Task 11.
+    </p>
+  </main>
+</BaseLayout>

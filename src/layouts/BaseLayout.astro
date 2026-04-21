@@ -1,0 +1,40 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Design Engineer. The site you're reading is the portfolio." } = Astro.props;
+
+const adobeFontsCSS = import.meta.env.PUBLIC_ADOBE_FONTS_URL ?? "";
+---
+<!doctype html>
+<!--
+  Built by Maria Angelika Agutaya. mariaangelika.com
+  Astro + React islands · Tailwind v4 · Cloudflare Workers
+  Type: Freight Big Pro · Neue Haas Grotesk · Input Mono
+  Form: Worker endpoint + Turnstile + Resend
+  Motion: proximity variable weight · flip-morph · grid rules
+  Source: github.com/mariaangelikabuilds/portfolio
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mariaangelika.com" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {adobeFontsCSS && <link rel="stylesheet" href={adobeFontsCSS} />}
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  @import "../styles/global.css";
+</style>
