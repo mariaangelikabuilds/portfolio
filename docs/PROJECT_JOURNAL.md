@@ -6,6 +6,38 @@ Newest entries at the top.
 
 ---
 
+## 2026-04-21. Session 1c: Phase 2 partial (BaseLayout through content collection)
+
+Tasks 6 and 7 completed. Two more commits, build clean, pushed to origin.
+
+### Completed
+- **Task 6:** `src/styles/global.css` created with design tokens (palette, fonts, layout, motion). `src/layouts/BaseLayout.astro` created with title/description props, Adobe Fonts `<link>` loaded from `PUBLIC_ADOBE_FONTS_URL` env var, HTML source easter egg comment, `<slot />`. `src/pages/index.astro` rewritten as minimal placeholder using BaseLayout. Commit: `df009dd`.
+- **Task 7:** Content collection schema created with zod validation for the work collection. `portfolio.md` stub with full frontmatter, placeholder body. Commit: `6ef7e12`.
+
+### Plan deviations (important for downstream tasks)
+
+- **Astro 6 content collections API change.** The plan used the legacy `src/content/config.ts + type: 'content'` pattern. Astro 6 removed that. New pattern:
+  - Config moved to `src/content.config.ts` (root of src, not inside content/)
+  - Uses `glob` loader from `astro/loaders` with pattern and base path
+  - Downstream API changes:
+    - `entry.render()` → `render(entry)` (import `render` from `astro:content`)
+    - `entry.slug` → `entry.id` or `entry.data.slug` (file stem is the ID)
+    - `getCollection('work')` unchanged
+  - **Affects Task 11** (landing page consumes collection for Selected Work) **and Task 12** (case study dynamic route calls `render`). Both task prompts must inject the corrected API.
+
+### Adobe Fonts live
+- Project ID: `aef3aiw`
+- URL: `https://use.typekit.net/aef3aiw.css`
+- Activated fonts: Freight Big Pro, Neue Haas Grotesk Display, Neue Haas Grotesk Text, Input Mono (assumed — URL returns 200, actual font availability verified at browser render time in Task 11+)
+- `.env` stored at project root, gitignored, contains `PUBLIC_ADOBE_FONTS_URL` and empty placeholders for TURNSTILE/RESEND keys
+
+### Current state
+- 7 commits on main, all pushed
+- Build passes clean
+- Ready for Task 8 (LeftPanel component)
+
+---
+
 ## 2026-04-21. Session 1b: Phase 1 implementation (scaffold and repo)
 
 Same-day continuation. Executed Phase 1 of the implementation plan via subagent-driven development. Five tasks done, four commits, repo live.
