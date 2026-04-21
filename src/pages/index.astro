@@ -4,10 +4,17 @@ import LeftPanel from '../components/LeftPanel.astro';
 import MobileHeader from '../components/MobileHeader.astro';
 import WorkPreview from '../components/WorkPreview.astro';
 import FooterEcho from '../components/FooterEcho.astro';
+import Hero from '../components/Hero.tsx';
 import { getCollection } from 'astro:content';
 
 const entries = await getCollection('work');
 entries.sort((a, b) => a.data.order - b.data.order);
+
+const heroLine1 = [['Design', ' ', 'Engineer.']];
+const heroLine2 = [
+  ['The', ' ', 'site', ' ', "you're", ' ', 'reading'],
+  ['is', ' ', 'the', ' ', 'portfolio.'],
+];
 ---
 <BaseLayout title="Maria Angelika Agutaya — Design Engineer">
   <MobileHeader />
@@ -15,12 +22,11 @@ entries.sort((a, b) => a.data.order - b.data.order);
 
   <main class="right-column">
     <section class="hero" data-rules>
-      <h1 class="hero-line" data-glyph-container>
-        <span class="hero-line-break">Design Engineer.</span>
+      <h1 class="hero-line">
+        <Hero client:load lines={heroLine1} />
       </h1>
-      <h2 class="hero-sub" data-glyph-container>
-        <span class="hero-line-break">The site you're reading</span>
-        <span class="hero-line-break">is the portfolio.</span>
+      <h2 class="hero-sub">
+        <Hero client:load lines={heroLine2} />
       </h2>
     </section>
 
@@ -70,8 +76,22 @@ entries.sort((a, b) => a.data.order - b.data.order);
     color: var(--color-cream);
   }
 
-  .hero-line-break {
+  .hero-mount {
     display: block;
+  }
+
+  .hero-line-mount {
+    display: block;
+  }
+
+  .hero-word {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .hero-word [data-glyph] {
+    display: inline-block;
+    transition: font-variation-settings 40ms linear;
   }
 
   .section-heading {
