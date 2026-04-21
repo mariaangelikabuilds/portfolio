@@ -1,0 +1,69 @@
+---
+title: mariaangelika.com
+slug: portfolio
+tagline: A portfolio that doubles as its own case study. Every design decision is visible in the code you're reading.
+category: case-study
+stack:
+  - Astro 6
+  - React islands
+  - Tailwind CSS v4
+  - Cloudflare Workers
+  - Cloudflare Turnstile
+  - Adobe Fonts
+year: 2026
+timeToShip: 6 days
+order: 1
+publishedAt: 2026-04-27
+---
+
+import DecisionBlock from '../../components/DecisionBlock.astro';
+import HeroCopyToggle from '../../components/HeroCopyToggle.tsx';
+
+## The problem
+
+A portfolio has to prove something in the first click. For a Design Engineer, the proof isn't in what you say. It's whether the site feels designed and built by the same person.
+
+Most fail this. They look templated, or they bury design decisions under generic dev aesthetics. I wanted this one to do the opposite: show the thinking in the surface. Every decision I made during the build is visible on the page you're reading.
+
+## What I built
+
+A dark editorial landing page with a fixed identity panel, a kinetic hero, and one case study. The one you're reading. Type and spacing carry the personality. No chromatic accent.
+
+Runs on Astro with three React islands for the moments that need interaction: the proximity-responsive hero typography, the hero copy A/B toggle you can try below, and the contact form. Everything else ships zero client JavaScript.
+
+Three motions total, across the whole site. The proximity hero responds continuously to cursor presence. The flip-morph transition on navigation animates the work card into the case study title. The grid rules easter egg (click the `+` in the panel) reveals the layout system holding the site together. Every other element is deliberately static.
+
+<DecisionBlock label="no chromatic accent" artifact="/assets/decisions/accent-color.png" artifactAlt="Five accent color swatches tested, showing electric mint, acid chartreuse, warm peach, hot magenta, and cream off-white. Cream was selected.">
+  Tested five accent colors. Cream on navy forced type to carry everything, which was the point. Color would have been a crutch.
+</DecisionBlock>
+
+<DecisionBlock label="foundry type over the v0-default stack" artifact="/assets/decisions/typography.png" artifactAlt="Four typography pairings tested, showing rejected defaults and the selected Freight Big Pro pairing.">
+  Inter, Fraunces, Space Grotesk, Instrument Serif. The AI-generated-site stack. Picked Freight Big Pro, Neue Haas Grotesk, and Input Mono from Adobe Fonts instead. Signals human taste, not a template.
+</DecisionBlock>
+
+<DecisionBlock label="hero is about this site, not me">
+  First draft had a three-verb brand line. It was doing work the work should do. Replaced it with "The site you're reading is the portfolio." The hero points at evidence instead of chanting. Try it below.
+
+  <HeroCopyToggle client:visible />
+</DecisionBlock>
+
+<DecisionBlock label="Brittany's structure, Rauno's personality" artifact="/assets/decisions/landing-layout.png" artifactAlt="Landing page wireframe showing fixed left panel and scrolling right column.">
+  Fixed left identity panel keeps things recruiter-scannable. Motion and mono captions carry personality without breaking scanability. Three motions total, one per category: proximity hero, flip-morph navigation, grid rules easter egg.
+</DecisionBlock>
+
+## Stack
+
+Astro because it ships zero JavaScript by default. React for the three islands that need motion or interaction. Cloudflare Workers because the contact form needs a real endpoint, without the edge-runtime compatibility issues that show up on other platforms.
+
+| Layer | Choice |
+|---|---|
+| Framework | Astro 6 with React islands |
+| Styling | Tailwind CSS v4 plus CSS custom properties |
+| Hosting | Cloudflare Workers via `@astrojs/cloudflare` |
+| Form | Worker endpoint, Turnstile, Resend outbound |
+| Fonts | Freight Big Pro, Neue Haas Grotesk, Input Mono via Adobe Fonts |
+| Motion | Vanilla JS plus rAF (hero), Astro View Transitions plus GSAP Flip (nav), vanilla JS (grid rules) |
+
+## Result
+
+Shipped in six days, first file to live URL. The form routes to my inbox via Resend. You're reading this, so it works.
