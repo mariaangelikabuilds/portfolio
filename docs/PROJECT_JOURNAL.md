@@ -6,6 +6,57 @@ Newest entries at the top.
 
 ---
 
+## 2026-04-21. Session 1d: Phases 3 through 12 complete (v1 code-complete)
+
+Rolled through eleven plan tasks in one pass. Entire v1 codebase is now in place; only Cloudflare deploy remains blocked on secrets.
+
+### Completed
+- **Task 11.** `src/pages/index.astro` rewritten with hero, Selected Work (pulled from `getCollection`), Contact section shell, FooterEcho. `src/components/WorkPreview.astro` card component with `transition:name` for Motion 2. All sections marked `data-rules` for Motion 3. Uses Astro 6 API `entry.data.slug`. Commit: `c859080`.
+- **Tasks 12, 13.** `src/pages/work/[slug].astro` case study route with `export const prerender = true` (bakes to static HTML in Worker bundle). `src/components/DecisionBlock.astro` inset component with optional image or named slot. Astro 6 API `render(entry)` imported from `astro:content`. Commit: `8d027aa`.
+- **Task 14 (Motion 1).** `src/components/hero-logic.ts` with pure `calcGlyphWeight` linear-interp function. `tests/hero.test.ts` with 3 Vitest cases (all pass). `src/components/Hero.tsx` React island using rAF loop to write `fontVariationSettings` per glyph based on cursor distance. Wired into `index.astro` with `client:load` for both hero lines. Added vitest devDep and `test` / `test:watch` scripts. Commit: `d9b9bfd`.
+- **Tasks 15, 16 (Motion 2).** `ClientRouter` mounted in `BaseLayout` head to activate View Transitions. `src/scripts/flip-fallback.ts` using GSAP Flip captures source rect on click to `/work/*`, replays from sessionStorage on next page for browsers without `startViewTransition`. Commit: `5cc8eb7`.
+- **Task 17 (Motion 3).** `src/components/GridRulesToggle.tsx` island listens on `#grid-rules-toggle` button, overlays `[data-rules]` elements with outlines + mono dimension labels. Mounted `client:load` in `BaseLayout`. Commit: `4f955a4`.
+- **Task 18.** `src/components/HeroCopyToggle.tsx` A/B demo component. Commit: `28e7b0e`.
+- **Tasks 19, 20.** `src/components/ContactForm.tsx` client:visible island with Turnstile widget + fetch POST. `src/pages/api/contact.ts` SSR endpoint (`prerender = false`) with zod validation, Turnstile siteverify, Resend outbound. `src/pages/api/contact-schema.ts` + 4 Vitest cases (all pass). Turnstile api.js loaded async in BaseLayout. Reads env via `locals.runtime.env` with `process.env` fallback. Installed `resend`. Commit: `33d535f`.
+- **Task 21.** Converted `portfolio.md` to `portfolio.mdx`. Installed `@astrojs/mdx`, updated `astro.config.mjs` integrations and `content.config.ts` glob to `**/*.{md,mdx}`. Prose: problem, what I built, 4 `<DecisionBlock>` components (no chromatic accent, foundry type, hero about the site, Brittany's structure), stack table, result. Decision #3 embeds `<HeroCopyToggle client:visible />` inline. Commit: `b048e40`.
+- **Task 22.** `scripts/capture-decision-artifacts.sh` Edge headless capture script. Three PNGs in `public/assets/decisions/`: accent-color, typography, landing-layout. Referenced by DecisionBlocks in MDX. Commit: `c3a6c6d`.
+
+### Plan deviations and fixes this session
+
+- **Astro 6 content API corrections.** As flagged in session 1c: `entry.render()` replaced with `render(entry)` imported from `astro:content`; `entry.slug` replaced with `entry.data.slug`. Applied to Task 11 (WorkPreview) and Task 12 (case study route).
+- **Prerender flag needed on dynamic route.** `getStaticPaths()` was getting ignored in SSR mode. Added `export const prerender = true` to `/work/[slug].astro` so it bakes to static HTML at build time. `/api/contact` has `prerender = false` to stay SSR.
+- **MDX chosen over inline createRoot mount.** Plan flagged two options for mounting `HeroCopyToggle` inside the case study markdown. Took the MDX path for clean inline imports. Added `@astrojs/mdx` integration.
+- **Edge headless capture broken twice before working.**
+  1. First run: produced two identical PNGs (accent-color and typography had same SHA). Added unique `--user-data-dir` per call. Still identical.
+  2. Second run: inspected a PNG, it was "ERR_FILE_NOT_FOUND". The MinGW `/d/...` path in `file://` URLs doesn't resolve on native Windows Edge. Fixed with `cygpath -m` conversion to `D:/...` format.
+- **CSS added beyond plan.** Plan omitted CSS rules for the Hero-island-generated `.hero-mount`, `.hero-line-mount`, `.hero-word` spans. Without `display: block` on line-mount and `display: inline-block` on word, per-glyph spans would collide. Added to `index.astro` `<style>` block.
+- **Stack label updated.** Case study MDX frontmatter says `Astro 6` (scaffold is actually 6.1.8), not the plan's `Astro 5`. Truth for recruiters.
+
+### Current state at end of session 1d
+- 23 commits on main, all pushed to `github.com/mariaangelikabuilds/portfolio`
+- `npx astro build` passes clean (prerenders `/work/portfolio/index.html`)
+- `npm test` passes 7/7 (3 hero-logic + 4 contact-schema)
+- Three React islands hydrating on the landing: `Hero` x2 (client:load), `ContactForm` (client:visible), `GridRulesToggle` (client:load via BaseLayout), plus `HeroCopyToggle` (client:visible inside case study MDX)
+- All artifact PNGs captured and committed
+- `.env` still has empty `PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY` — blocks real form submissions and Task 24 deploy
+
+### What blocks v1 launch
+1. Angel needs to create Turnstile widget in Cloudflare dashboard → get site key + secret → fill `.env`.
+2. Angel needs Resend account + verified `mariaangelika.com` sending domain → get API key → fill `.env`.
+3. Angel runs `wrangler secret put` for each secret, then `wrangler deploy` (or via dashboard GitHub auto-deploy).
+4. Angel attaches custom domain `mariaangelika.com` in Cloudflare Workers dashboard.
+
+### Tasks deferred (pending browser verification or Angel action)
+- **Task 23:** mobile polish pass — needs Angel's eye on iPhone/iPad breakpoints in DevTools device mode.
+- **Task 24:** Cloudflare deploy — blocked on secrets above.
+- **Tasks 25-27:** Lighthouse run, cross-browser check, tag v1.0, final journal entry. Post-deploy work.
+
+### What to check in the browser on pickup
+- `http://localhost:4321/` — Motion 1 (cursor-responsive hero weight), work card → case study navigation, Motion 3 (`+` button toggles grid rules overlay), contact form renders (won't submit — empty site key).
+- `http://localhost:4321/work/portfolio` — case study prose, 4 decision blocks with PNG artifacts, HeroCopyToggle A/B demo inline.
+
+---
+
 ## 2026-04-21. Session 1c: Phase 2 complete (layout shell)
 
 All five Phase 2 tasks done. Layout shell components built and mounted on landing scaffold. Pushed to origin.
