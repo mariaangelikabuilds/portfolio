@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from 'astro:transitions';
+
 interface Props {
   title: string;
   description?: string;
@@ -28,10 +30,14 @@ const adobeFontsCSS = import.meta.env.PUBLIC_ADOBE_FONTS_URL ?? "";
     <meta property="og:url" content="https://mariaangelika.com" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     {adobeFontsCSS && <link rel="stylesheet" href={adobeFontsCSS} />}
+    <ClientRouter />
     <title>{title}</title>
   </head>
   <body>
     <slot />
+    <script>
+      import '../scripts/flip-fallback.ts';
+    </script>
   </body>
 </html>
 
