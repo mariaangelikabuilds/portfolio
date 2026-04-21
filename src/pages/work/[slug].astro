@@ -1,0 +1,163 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeftPanel from '../../components/LeftPanel.astro';
+import MobileHeader from '../../components/MobileHeader.astro';
+import FooterEcho from '../../components/FooterEcho.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const entries = await getCollection('work');
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+}
+
+const { entry } = Astro.props;
+const { title, tagline, stack, year, timeToShip, slug } = entry.data;
+const { Content } = await render(entry);
+---
+<BaseLayout title={`${title} — Case Study`} description={tagline}>
+  <MobileHeader />
+  <LeftPanel showBackLink />
+
+  <main class="right-column">
+    <article class="case-study">
+      <p class="eyebrow">Case study, {year}.</p>
+
+      <h1 class="cs-title" transition:name={`work-title-${slug}`}>{title}</h1>
+      <p class="cs-tagline">{tagline}</p>
+      <p class="cs-context">
+        Designed, built, and shipped in {timeToShip} on {stack.slice(0, 2).join(' plus ')}.
+      </p>
+
+      <div class="hero-visual" data-rules>
+        <p class="hero-visual-placeholder">Live site recording, captured post-launch.</p>
+      </div>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <nav class="case-study-footnav">
+        <a href="/">← Index</a>
+        <span>Next case study (coming)</span>
+      </nav>
+    </article>
+
+    <FooterEcho />
+  </main>
+</BaseLayout>
+
+<style>
+  .right-column {
+    margin-left: var(--panel-width);
+    padding: 48px 64px;
+  }
+
+  .case-study {
+    max-width: var(--prose-max);
+  }
+
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-cream-dim);
+    margin-bottom: 12px;
+  }
+
+  .cs-title {
+    font-family: var(--font-display);
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .cs-tagline {
+    font-size: 16px;
+    color: var(--color-cream-dim);
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+
+  .cs-context {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-cream-dim);
+    margin-bottom: 32px;
+  }
+
+  .hero-visual {
+    margin: 0 calc(50% - 50vw + var(--panel-width) / 2) 40px calc(50% - 50vw + var(--panel-width) / 2);
+    max-width: calc(100vw - var(--panel-width) - 128px);
+    height: 280px;
+    background: linear-gradient(135deg, rgba(245, 230, 200, 0.06), transparent);
+    border: 1px solid var(--color-cream-faint);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-visual-placeholder {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-cream-dim);
+    letter-spacing: 0.08em;
+  }
+
+  .prose {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .prose :global(h2) {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    margin: 40px 0 14px;
+  }
+
+  .prose :global(p) {
+    margin-bottom: 14px;
+    color: var(--color-cream);
+  }
+
+  .case-study-footnav {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-cream-faint);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-cream-dim);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 1023px) {
+    .right-column {
+      margin-left: 0;
+      padding: 24px 22px;
+    }
+
+    .cs-title {
+      font-size: 32px;
+    }
+
+    .hero-visual {
+      margin: 0 0 32px;
+      max-width: 100%;
+    }
+  }
+</style>
