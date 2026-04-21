@@ -2,7 +2,7 @@
 	"$schema": "https://unpkg.com/wrangler/config-schema.json",
 	"compatibility_date": "2026-04-21",
 	"compatibility_flags": ["global_fetch_strictly_public"],
-	"name": "mariaangelika-portfolio",
+	"name": "portfolio",
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
 		"directory": "./dist",
