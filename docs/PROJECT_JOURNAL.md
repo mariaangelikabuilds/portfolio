@@ -6,13 +6,17 @@ Newest entries at the top.
 
 ---
 
-## 2026-04-21. Session 1c: Phase 2 partial (BaseLayout through content collection)
+## 2026-04-21. Session 1c: Phase 2 complete (layout shell)
 
-Tasks 6 and 7 completed. Two more commits, build clean, pushed to origin.
+All five Phase 2 tasks done. Layout shell components built and mounted on landing scaffold. Pushed to origin.
 
 ### Completed
 - **Task 6:** `src/styles/global.css` created with design tokens (palette, fonts, layout, motion). `src/layouts/BaseLayout.astro` created with title/description props, Adobe Fonts `<link>` loaded from `PUBLIC_ADOBE_FONTS_URL` env var, HTML source easter egg comment, `<slot />`. `src/pages/index.astro` rewritten as minimal placeholder using BaseLayout. Commit: `df009dd`.
 - **Task 7:** Content collection schema created with zod validation for the work collection. `portfolio.md` stub with full frontmatter, placeholder body. Commit: `6ef7e12`.
+- **Task 8:** `src/components/LeftPanel.astro` — fixed identity panel, 38% width desktop, hidden on mobile. Contains name, bio sentence, nav (Work + Contact with active state, or Index when showBackLink is true), CTA triplet with three linked sentences, socials sentence, `+` grid-rules-toggle button. Commit: `7bb44d9`.
+- **Task 9:** `src/components/MobileHeader.astro` — sticky top bar with MA monogram and Menu button. Slide-down overlay with Work/Contact/bio/socials. Vanilla JS script toggles aria-hidden on click. Shown only below 1024px. Commit: `8ec219a`.
+- **Task 10:** `src/components/FooterEcho.astro` — 1px cream divider, 24px Freight Big Pro echo line ("The site you just read was the portfolio."), 10px Input Mono stack signal line. Max width 640px. Commit: `00b04cd`.
+- **Post-task fix:** Replaced JSX-style `{' '}` whitespace with natural HTML spaces in LeftPanel and MobileHeader (subagent flagged Astro may render those as literal text). Safer approach. Commit: `482a203`.
 
 ### Plan deviations (important for downstream tasks)
 
@@ -31,10 +35,16 @@ Tasks 6 and 7 completed. Two more commits, build clean, pushed to origin.
 - Activated fonts: Freight Big Pro, Neue Haas Grotesk Display, Neue Haas Grotesk Text, Input Mono (assumed — URL returns 200, actual font availability verified at browser render time in Task 11+)
 - `.env` stored at project root, gitignored, contains `PUBLIC_ADOBE_FONTS_URL` and empty placeholders for TURNSTILE/RESEND keys
 
-### Current state
-- 7 commits on main, all pushed
+### Current state at end of Phase 2
+- 12 commits on main, all pushed
 - Build passes clean
-- Ready for Task 8 (LeftPanel component)
+- All layout shell components built and mounted in temporary landing scaffold
+- Ready for Phase 3: Task 11 (composing the real landing page with Hero + Selected Work + Contact sections, replacing the placeholder scaffold)
+
+### Next session entry points
+- **Task 11 (landing page composition):** Must use Astro 6 content collection API — `getCollection('work')` is fine but entry has `.id` not `.slug`, and `render(entry)` replaces `entry.render()`. Update Task 11 prompt when dispatching.
+- **Task 12 (case study dynamic route):** Same API note as Task 11. Also: `getStaticPaths` pattern unchanged, but `params.slug` now comes from `entry.id` or `entry.data.slug`.
+- **Angel prep for Phase 3 (optional):** If you want the site auto-deploying on every push before Phase 3 work, connect the GitHub repo to Cloudflare in the dashboard: Workers & Pages → Import a Repository → select `mariaangelikabuilds/portfolio` → Framework: Astro → Build: `npm run build` → Build output: `dist`. That's a 2-minute setup.
 
 ---
 
