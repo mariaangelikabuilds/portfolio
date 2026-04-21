@@ -1,0 +1,113 @@
+---
+---
+<header class="mobile-header">
+  <a href="/" class="mobile-logo">MA</a>
+  <button
+    id="mobile-menu-toggle"
+    class="mobile-menu-btn"
+    aria-label="Open menu"
+    type="button"
+  >
+    Menu
+  </button>
+</header>
+
+<nav id="mobile-menu" class="mobile-menu" aria-hidden="true">
+  <a href="/#work">Work</a>
+  <a href="/#contact">Contact</a>
+  <hr />
+  <p class="mobile-bio">
+    Design Engineer. Based in the Philippines. Open to new roles.
+  </p>
+  <p class="mobile-socials">
+    <a href="https://github.com/mariaangelikabuilds">GitHub</a>,{' '}
+    <a href="https://linkedin.com/in/mariaangelikaagutaya">LinkedIn</a>,{' '}
+    <a href="mailto:hi@mariaangelika.com">email</a>.
+  </p>
+</nav>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    const expanded = menu?.getAttribute('aria-hidden') === 'false';
+    menu?.setAttribute('aria-hidden', expanded ? 'true' : 'false');
+    toggle.setAttribute('aria-label', expanded ? 'Open menu' : 'Close menu');
+  });
+</script>
+
+<style>
+  .mobile-header {
+    display: none;
+    padding: 20px 22px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-cream-faint);
+    position: sticky;
+    top: 0;
+    background: var(--color-navy);
+    z-index: 10;
+  }
+
+  .mobile-logo {
+    font-family: var(--font-display);
+    font-size: 15px;
+    letter-spacing: -0.02em;
+    color: var(--color-cream);
+  }
+
+  .mobile-menu-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-cream-dim);
+    font-family: var(--font-body);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .mobile-menu-btn:hover {
+    color: var(--color-cream);
+  }
+
+  .mobile-menu {
+    display: none;
+    padding: 20px 22px;
+    flex-direction: column;
+    gap: 12px;
+    border-bottom: 1px solid var(--color-cream-faint);
+    background: var(--color-navy);
+    position: sticky;
+    top: 65px;
+    z-index: 9;
+  }
+
+  .mobile-menu[aria-hidden="false"] {
+    display: flex;
+  }
+
+  .mobile-menu a {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-cream);
+  }
+
+  .mobile-menu hr {
+    border: none;
+    border-top: 1px solid var(--color-cream-faint);
+    margin: 8px 0;
+  }
+
+  .mobile-bio,
+  .mobile-socials {
+    font-size: 12px;
+    color: var(--color-cream-dim);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 1023px) {
+    .mobile-header {
+      display: flex;
+    }
+  }
+</style>
