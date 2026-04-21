@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import GridRulesToggle from '../components/GridRulesToggle.tsx';
 
 interface Props {
   title: string;
@@ -35,6 +36,9 @@ const adobeFontsCSS = import.meta.env.PUBLIC_ADOBE_FONTS_URL ?? "";
   </head>
   <body>
     <slot />
+    <div id="grid-rules-mount">
+      <GridRulesToggle client:load />
+    </div>
     <script>
       import '../scripts/flip-fallback.ts';
     </script>
