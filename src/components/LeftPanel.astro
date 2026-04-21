@@ -1,0 +1,159 @@
+---
+interface Props {
+  activeSection?: 'work' | 'contact';
+  showBackLink?: boolean;
+}
+
+const { activeSection, showBackLink = false } = Astro.props;
+---
+<aside class="left-panel">
+  <div class="panel-top">
+    <h1 class="panel-name">
+      Maria Angelika<br />Agutaya
+    </h1>
+    <p class="panel-bio">
+      Design Engineer. Based in the Philippines. Open to new roles.
+    </p>
+
+    {showBackLink ? (
+      <nav class="panel-nav">
+        <a href="/" class="nav-item">Index</a>
+      </nav>
+    ) : (
+      <nav class="panel-nav">
+        <a
+          href="/#work"
+          class={`nav-item ${activeSection === 'work' ? 'active' : ''}`}
+        >
+          Work
+        </a>
+        <a
+          href="/#contact"
+          class={`nav-item ${activeSection === 'contact' ? 'active' : ''}`}
+        >
+          Contact
+        </a>
+      </nav>
+    )}
+
+    <p class="panel-cta">
+      <a href="https://github.com/mariaangelikabuilds/portfolio">Fork the code.</a>
+      {' '}
+      <a href="/#contact">Send a note.</a>
+      {' '}
+      <a href="/work/portfolio">Read the case study.</a>
+    </p>
+  </div>
+
+  <div class="panel-bottom">
+    <p class="panel-socials">
+      <a href="https://github.com/mariaangelikabuilds">GitHub</a>,{' '}
+      <a href="https://linkedin.com/in/mariaangelikaagutaya">LinkedIn</a>,{' '}
+      <a href="mailto:hi@mariaangelika.com">email</a>.
+    </p>
+    <button
+      id="grid-rules-toggle"
+      class="grid-cross"
+      aria-label="Toggle grid rules"
+      type="button"
+    >
+      +
+    </button>
+  </div>
+</aside>
+
+<style>
+  .left-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--panel-width);
+    height: 100vh;
+    padding: 48px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px dashed var(--color-cream-faint);
+    font-family: var(--font-body);
+    font-size: 13px;
+    z-index: 5;
+    background: var(--color-navy);
+  }
+
+  .panel-name {
+    font-family: var(--font-display);
+    font-size: 28px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .panel-bio {
+    color: var(--color-cream-dim);
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: 32ch;
+    margin-bottom: 32px;
+  }
+
+  .panel-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 28px;
+  }
+
+  .nav-item {
+    font-size: 14px;
+    padding: 4px 0;
+    border-left: 1px solid transparent;
+    transition: padding-left 0.15s, border-left-color 0.15s;
+    width: fit-content;
+  }
+
+  .nav-item.active {
+    border-left-color: var(--color-cream);
+    padding-left: 10px;
+  }
+
+  .panel-cta {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--color-cream);
+    max-width: 36ch;
+  }
+
+  .panel-cta a {
+    display: inline;
+  }
+
+  .panel-socials {
+    font-size: 12px;
+    color: var(--color-cream-dim);
+    margin-bottom: 20px;
+  }
+
+  .grid-cross {
+    background: transparent;
+    border: none;
+    color: var(--color-cream-dim);
+    font-family: var(--font-mono);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin-left: -8px;
+    align-self: flex-start;
+    transition: color 0.15s;
+  }
+
+  .grid-cross:hover {
+    color: var(--color-cream);
+  }
+
+  @media (max-width: 1023px) {
+    .left-panel {
+      display: none;
+    }
+  }
+</style>
